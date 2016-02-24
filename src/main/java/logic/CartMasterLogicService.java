@@ -39,7 +39,7 @@ public class CartMasterLogicService implements ICartMasterLogicService{
 //    @Requires
     public CartMasterDTO createMasterCart(CartMasterDTO cart) {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target( ServiceDirectory.CART_HOST ).path("Cart/webresources/Cart/");
+        WebTarget target = client.target( ServiceDirectory.CART_HOST ).path("webresources/Cart/");
         CartDTO persistedCartDTO=target.request(MediaType.APPLICATION_JSON).post(Entity.entity(cart.getCartEntity(), MediaType.APPLICATION_JSON), CartDTO.class);
 
 
@@ -50,7 +50,7 @@ public class CartMasterLogicService implements ICartMasterLogicService{
 //        CartDTO persistedCartDTO = cartPersistance.createCart(cart.getCartEntity());
         if (cart.getCreateitem() != null) {
             for (ItemDTO itemDTO : cart.getCreateitem()) {
-                target = client.target( ServiceDirectory.ITEM_HOST ).path("Item/webresources/Item/");
+                target = client.target( ServiceDirectory.ITEM_HOST ).path("webresources/Item/");
                 ItemDTO createdItemDTO=target.request(MediaType.APPLICATION_JSON).post(Entity.entity(itemDTO,MediaType.APPLICATION_JSON),ItemDTO.class);
 //                ItemDTO createdItemDTO= itemPersistance.createItem(itemDTO);
                 CartitemEntity cartItemEntity = new CartitemEntity(persistedCartDTO.getId(), createdItemDTO.getId());
@@ -60,7 +60,7 @@ public class CartMasterLogicService implements ICartMasterLogicService{
         // update item
         if (cart.getUpdateitem() != null) {
             for (ItemDTO itemDTO : cart.getUpdateitem()) {
-                target = client.target( ServiceDirectory.ITEM_HOST ).path("Item/webresources/Item/");
+                target = client.target( ServiceDirectory.ITEM_HOST ).path("webresources/Item/");
 
                 target.request(MediaType.APPLICATION_JSON).put(Entity.entity(itemDTO,MediaType.APPLICATION_JSON));
 //                itemPersistance.updateItem(itemDTO);
@@ -78,7 +78,7 @@ public class CartMasterLogicService implements ICartMasterLogicService{
 
     public void deleteMasterCart(Long id) {
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target( ServiceDirectory.CART_HOST ).path("Cart/webresources/Cart/" + id);
+        WebTarget target = client.target( ServiceDirectory.CART_HOST ).path("webresources/Cart/" + id);
         target.request(MediaType.APPLICATION_JSON).delete();
 //        cartPersistance.deleteCart(id);
     }
@@ -86,7 +86,7 @@ public class CartMasterLogicService implements ICartMasterLogicService{
     public void updateMasterCart(CartMasterDTO cart) {
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target( ServiceDirectory.CART_HOST ).path("Cart/webresources/Cart/");
+        WebTarget target = client.target( ServiceDirectory.CART_HOST ).path("webresources/Cart/");
         target.request(MediaType.APPLICATION_JSON).put(Entity.entity(cart.getCartEntity(), MediaType.APPLICATION_JSON), CartDTO.class);
 
 //        cartPersistance.updateCart(cart.getCartEntity());
@@ -95,7 +95,7 @@ public class CartMasterLogicService implements ICartMasterLogicService{
         // persist new item
         if (cart.getCreateitem() != null) {
             for (ItemDTO itemDTO : cart.getCreateitem()) {
-                target = client.target( ServiceDirectory.ITEM_HOST ).path("Item/webresources/Item/");
+                target = client.target( ServiceDirectory.ITEM_HOST ).path("webresources/Item/");
 
                 ItemDTO createdItemDTO = target.request(MediaType.APPLICATION_JSON).post(Entity.entity(itemDTO, MediaType.APPLICATION_JSON), ItemDTO.class);
 //                ItemDTO createdItemDTO = itemPersistance.createItem(itemDTO);
@@ -106,7 +106,7 @@ public class CartMasterLogicService implements ICartMasterLogicService{
         // update item
         if (cart.getUpdateitem() != null) {
             for (ItemDTO itemDTO : cart.getUpdateitem()) {
-                target = client.target( ServiceDirectory.ITEM_HOST ).path("Item/webresources/Item/");
+                target = client.target( ServiceDirectory.ITEM_HOST ).path("webresources/Item/");
                 target.request(MediaType.APPLICATION_JSON).put(Entity.entity(itemDTO,MediaType.APPLICATION_JSON));
 //                itemPersistance.updateItem(itemDTO);
             }
@@ -116,7 +116,7 @@ public class CartMasterLogicService implements ICartMasterLogicService{
             for (ItemDTO itemDTO : cart.getDeleteitem()) {
                 cartMasterPersistance.deleteCartitemEntity(cart.getCartEntity().getId(), itemDTO.getId());
 
-                target = client.target( ServiceDirectory.ITEM_HOST ).path("Item/webresources/Item/"+itemDTO.getId());
+                target = client.target( ServiceDirectory.ITEM_HOST ).path("webresources/Item/"+itemDTO.getId());
                 target.request(MediaType.APPLICATION_JSON).delete();
 //                itemPersistance.deleteItem(itemDTO.getId());
             }

@@ -37,7 +37,7 @@ public class CartMasterPersistence implements ICartMasterPersistence {
         CartMasterDTO cartMasterDTO = new CartMasterDTO();
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target( ServiceDirectory.PRODUCT_HOST ).path("Product/webresources/Product/"+cartId);
+        WebTarget target = client.target( ServiceDirectory.PRODUCT_HOST ).path("webresources/Product/"+cartId);
 //        WebTarget target = client.target("http://localhost:8080").path("Product/webresources/Product/"+cartId);
         CartDTO cart=target.request(MediaType.APPLICATION_JSON).get(CartDTO.class);
 
