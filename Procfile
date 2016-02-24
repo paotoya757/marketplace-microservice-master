@@ -1,0 +1,1 @@
+web:    java "-DmyDb=new://Resource?type=DataSource&properties-provider=org.apache.openejb.resource.heroku.HerokuDatabasePropertiesProvider" -cp target/classes:target/dependency/* org.apache.tomee.embedded.Main --port=$PORT --as-war
