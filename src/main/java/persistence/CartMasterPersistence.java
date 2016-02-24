@@ -1,6 +1,8 @@
 package persistence;
 
 
+
+import service.ServiceDirectory;
 import api.dto.CartMasterDTO;
 import api.dto.common.CartDTO;
 import api.dto.common.ItemDTO;
@@ -17,12 +19,13 @@ import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.naming.ServiceRef;
 
 /**
  * Created by Mauricio on 3/23/15.
  */
 public class CartMasterPersistence implements ICartMasterPersistence {
-
+    
     @PersistenceContext(unitName="MarketplaceProjectPU")
     protected EntityManager entityManager;
 
@@ -34,7 +37,7 @@ public class CartMasterPersistence implements ICartMasterPersistence {
         CartMasterDTO cartMasterDTO = new CartMasterDTO();
 
         Client client = ClientBuilder.newClient();
-        WebTarget target = client.target("http://gf-pg-1bc085d5-1.maveme.cont.tutum.io:8080").path("Product/webresources/Product/"+cartId);
+        WebTarget target = client.target( ServiceDirectory.PRODUCT_HOST ).path("Product/webresources/Product/"+cartId);
 //        WebTarget target = client.target("http://localhost:8080").path("Product/webresources/Product/"+cartId);
         CartDTO cart=target.request(MediaType.APPLICATION_JSON).get(CartDTO.class);
 
